@@ -1,5 +1,5 @@
 const CHECK_INTERVAL = 5000; // 5s
-const CONTEXT_TIMEOUT = 180000; // 3mins 
+const CONTEXT_TIMEOUT = 20000; // 20s
 const events = ['click', 'mousemove', 'keydown', 'scroll']
 
 let lastInteraction = Date.now()
