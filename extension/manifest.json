@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "What Was This For?",
+    "version": "1.0",
+    "description": "An extension that helps you remember why you opened a tab!",
+    "permissions": [],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
+}
