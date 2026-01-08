@@ -24,14 +24,11 @@ const showContextReminder = () => {
 
 // Update the last interaction time if user did something
 const updateInteraction = () => {
-
-    let shouldShowContextReminder = contextCold && document.getElementById('context-bar') === null && sessionStorage.getItem('tabContext')
-
-    if (shouldShowContextReminder) {
-        console.log("context is cold,");
-        showContextReminder();
-        contextCold = false;
-    }
+    chrome.storage.local.get([window.location.href], (result) => {
+        console.log(`The context is ${result[window.location.href]}`);
+        const context = result[window.location.href];
+        if (context) showContextReminder(context);
+    });
 
     lastInteraction = Date.now();
 }

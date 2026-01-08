@@ -19,20 +19,17 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
 saveButton.onclick = () => {
     const context = input.value;
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.scripting.executeScript(
-            {
-                target: { tabId: tabs[0].id },
-                function: (context) => sessionStorage.setItem('tabContext', context),
-                args: [context],
-            });
-        statusElement.textContent = 'Context saved!';
-        setTimeout(() => (statusElement.textContent = ''), 800);
+    chrome.storage.local.set({ [window.location.href]: context }, () => {
+        statusElement.textContent = "Saved!";
+        setTimeout(() => (statusElement.textContent = ""), 800);
+        window.close();
     });
-}
+};
+
 
 // Clear context
-clearBtn.onclick = () => {
+clearButton.onclick = () => {
+    console.log("Clearing context...");
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
