@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Context Reminder</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            width: 250px;
+            padding: 10px;
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 5px;
+            padding: 4px;
+        }
+
+        button {
+            margin-top: 5px;
+            width: 100%;
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Set context for this tab</h3>
+    <input id="context-input" placeholder="Why did you open this tab?" />
+    <button id="save-btn">Save</button>
+    <button id="clear-btn">Clear</button>
+
+    <div id="status"></div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
