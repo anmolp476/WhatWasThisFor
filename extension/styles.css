@@ -1,20 +1,20 @@
 #context-bar,
 #context-reminder {
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #111;
-    color: white;
-    padding: 10px 14px;
-    border-radius: 8px;
-    z-index: 9999999999;
-    font-family: system-ui, sans-serif;
-    display: flex;
-    gap: 8px;
-    align-items: center;
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: black;
+  padding: 10px 14px;
+  border-radius: 8px;
+  z-index: 9999999999;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 #context-bar input {
-    padding: 4px 6px;
+  padding: 4px 6px;
 }
