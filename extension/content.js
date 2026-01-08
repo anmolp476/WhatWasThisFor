@@ -4,13 +4,63 @@ const events = ['click', 'mousemove', 'keydown', 'scroll']
 
 let lastInteraction = Date.now()
 let contextCold = false; 
+let hasPromptedForContext = false;
+
+const showContextPrompt = () => {
+    const bar = document.createElement('div');
+    bar.id = "context-bar";
+
+    bar.innerHTML = `
+        <span>Why did you open this tab?</span>
+        <input type="text" placeholder="Enter your context here..."/>
+        <button>Save</button>
+        <a href="#">Skip</a>
+        `;
+
+    document.body.prepend(bar);
+
+    const input = bar.querySelector('input');
+    const save = bar.querySelector('button');
+    const skip = bar.querySelector('a');
+
+    save.onclick = () => {
+        sessionStorage.setItem('tabContext', input.value);
+        bar.remove();
+    }
+
+    skip.onclick = (e) => {
+        e.preventDefault(); // This is so that the page doesn't jump to the top
+        sessionStorage.setItem('tabContext', 'No context provided');
+        bar.remove();
+    }
+}
+
+const showContextReminder = () => {
+    const context = sessionStorage.getItem('tabContext') || 'No context provided';
+
+    if(!context) return; 
+
+    const reminder = document.createElement("div");
+    reminder.id = "context-reminder";
+    reminder.textContent = `You opened this tab because: "${context}"`;
+
+    document.body.appendChild(reminder);
+
+    setTimeout(() => reminder.remove(), 5000); // Remove the remidner after 5 seconds
+}
 
 // Update the last interaction time if user did something
 const updateInteraction = () => {
+    if(!hasPromptedForContext && !sessionStorage.getItem('tabContext')) {
+        showContextPrompt();
+        hasPromptedForContext = true;
+    }
+
     if(contextCold) {
-        console.log("User has returned");
+        showContextReminder();
         contextCold = false;
     }
+
     lastInteraction = Date.now();
 }
 
