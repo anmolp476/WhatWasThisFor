@@ -1,9 +1,15 @@
 const CHECK_INTERVAL = 5000; // 5s
-const CONTEXT_TIMEOUT = 20000; // 20s
 const events = ['click', 'mousemove', 'keydown', 'scroll']
 
+let contextTimeout = 60000; // 20s
 let lastInteraction = Date.now()
 let contextCold = false;
+
+chrome.storage.local.get(['contextTimeout'], (result) => {
+    if (typeof result.contextTimeout === "number") {
+        contextTimeout = result.contextTimeout;
+    }
+});
 
 const showContextReminder = (context) => {
     console.log("context reminder time!");
@@ -45,11 +51,11 @@ events.forEach(event => {
 });
 
 // Every 5 seconds, check if the length of time between now and between 
-// the last interaction is greater then the CONTEXT_TIMEOUT threshold
+// the last interaction is greater then the contextTimeout threshold
 setInterval(() => {
     const now = Date.now();
 
-    if (!contextCold && now - lastInteraction > CONTEXT_TIMEOUT) {
+    if (!contextCold && now - lastInteraction > contextTimeout) {
         contextCold = true;
     }
 }, CHECK_INTERVAL);
