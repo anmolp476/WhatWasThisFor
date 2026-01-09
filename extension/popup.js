@@ -1,27 +1,29 @@
-const input = document.getElementById('context-input');
-const saveButton = document.getElementById('save-button');
-const clearButton = document.getElementById('clear-button');
-const statusElement = document.getElementById('status');
+const input = document.getElementById("context-input");
+const saveButton = document.getElementById("save-button");
+const clearButton = document.getElementById("clear-button");
+const statusElement = document.getElementById("status");
 
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.scripting.executeScript(
-        {
-            target: { tabId: tabs[0].id },
-            function: () => sessionStorage.getItem('tabContext'),
-        },
-        (results) => {
-            if (results?.[0]?.result) {
-                input.value = results[0].result;
-            }
-        }
-    );
-});
+const getTheTabURL = () => {
+    return new Promise((resolve) => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            resolve(tabs[0].url);
+        });
+    });
+};
+
+const saveContext = (tabUrl, context) => {
+    return chrome.storage.local.set({ [tabUrl]: context });
+}
 
 saveButton.onclick = () => {
     const context = input.value;
-    chrome.storage.local.set({ [window.location.href]: context }, () => {
+    console.log(window.location.href)
+
+    getTheTabURL().then((tabUrl) => {
+        saveContext(tabUrl, context);
+
         statusElement.textContent = "Saved!";
-        setTimeout(() => (statusElement.textContent = ""), 800);
+        setTimeout(() => (statusElement.textContent = ""), 1000);
         window.close();
     });
 };
@@ -29,14 +31,10 @@ saveButton.onclick = () => {
 
 // Clear context
 clearButton.onclick = () => {
-    console.log("Clearing context...");
+    console.log("Clearing input!! :)");
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            func: () => sessionStorage.removeItem("tabContext"),
-        });
         input.value = "";
         statusElement.textContent = "Cleared!";
-        setTimeout(() => (statusElement.textContent = ""), 800);
+        setTimeout(() => (statusElement.textContent = ""), 1000);
     });
 };

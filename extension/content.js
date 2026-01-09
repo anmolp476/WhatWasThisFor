@@ -5,8 +5,8 @@ const events = ['click', 'mousemove', 'keydown', 'scroll']
 let lastInteraction = Date.now()
 let contextCold = false;
 
-const showContextReminder = () => {
-    const context = sessionStorage.getItem('tabContext');
+const showContextReminder = (context) => {
+    console.log("context reminder time!");
 
     if (!context) return;
 
@@ -18,17 +18,23 @@ const showContextReminder = () => {
 
     setTimeout(() => {
         reminder.remove()
-        sessionStorage.removeItem('tabContext');
     }, 5000); // Remove the reminder after 5 seconds
 }
 
 // Update the last interaction time if user did something
 const updateInteraction = () => {
-    chrome.storage.local.get([window.location.href], (result) => {
-        console.log(`The context is ${result[window.location.href]}`);
-        const context = result[window.location.href];
-        if (context) showContextReminder(context);
+    const tabUrl = window.location.href;
+
+    chrome.storage.local.get([tabUrl], (result) => {
+        const context = result[tabUrl];
+        console.log("The context is: ", context);
+        if (context && contextCold) {
+            showContextReminder(context);
+            chrome.storage.local.remove([tabUrl]);
+            contextCold = false;
+        }
     });
+
 
     lastInteraction = Date.now();
 }
