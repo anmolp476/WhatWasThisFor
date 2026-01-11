@@ -14,13 +14,12 @@
 
         <label>
             Why did you open this tab?
-            <textarea id="context-input" placeholder="Your reminder goes here!"
-                rows="3"></textarea>
+            <textarea id="context-input" placeholder="Your reminder goes here!" rows="3" required></textarea>
         </label>
 
         <label>
             Remind me after (minutes)
-            <input type="number" id="timeout-input" min="1" step="1" />
+            <input type="number" id="timeout-input" min="1" step="1" placeholder="Default is 1 minute" />
         </label>
 
         <div class="buttons">
@@ -29,6 +28,13 @@
         </div>
 
         <div id="status"></div>
+    </div>
+    
+    <div class="color-section">
+        <label>
+            Reminder background
+            <input type="color" id="reminder-color" />
+        </label>
     </div>
 
     <script src="popup.js"></script>

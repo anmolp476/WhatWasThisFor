@@ -1,7 +1,7 @@
 const CHECK_INTERVAL = 5000; // 5s
 const events = ['click', 'mousemove', 'keydown', 'scroll']
 
-let contextTimeout = 60000; // 20s
+let contextTimeout = 60000; // The default is 1 minute
 let lastInteraction = Date.now()
 let contextCold = false;
 
@@ -19,6 +19,13 @@ const showContextReminder = (context) => {
     const reminder = document.createElement("div");
     reminder.id = "context-reminder";
     reminder.textContent = `You opened this tab because: "${context}"`;
+
+    chrome.storage.local.get(["reminderColor"], ({ reminderColor }) => {
+        if (reminderColor) {
+            reminder.style.background = reminderColor;
+        }
+    });
+
 
     document.body.appendChild(reminder);
 

@@ -21,7 +21,12 @@ const saveContext = (tabUrl, context) => {
 saveButton.onclick = () => {
     const context = input.value;
     const timeout = parseInt(timeoutElement.value) || TIMEOUT;
-    console.log(window.location.href)
+
+    if (!context) {
+        statusElement.textContent = "Please enter a reminder before saving.";
+        setTimeout(() => (statusElement.textContent = ""), 2000);
+        return; // Don't submit anything if context isn't given
+    }
 
     getTheTabURL().then((tabUrl) => {
         chrome.storage.local.set({
@@ -47,3 +52,17 @@ clearButton.onclick = () => {
         setTimeout(() => (statusElement.textContent = ""), 1000);
     });
 };
+
+chrome.storage.local.get(
+    ["reminderColor"],
+    ({ reminderColor }) => {
+        if (reminderColor) {
+            document.getElementById("reminder-color").value = reminderColor;
+        }
+    }
+);
+
+document.getElementById("reminder-color").addEventListener("input", e => {
+    const color = e.target.value;
+    chrome.storage.local.set({ reminderColor: color });
+});
