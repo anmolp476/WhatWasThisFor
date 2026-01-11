@@ -4,38 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Context Reminder</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            width: 250px;
-            padding: 10px;
-        }
-
-        input {
-            width: 100%;
-            margin-bottom: 5px;
-            padding: 4px;
-        }
-
-        button {
-            margin-top: 5px;
-            width: 100%;
-            padding: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
-    <h3>Set context for this tab</h3>
-    <input id="context-input" placeholder="Why did you open this tab?" />
-    <label>
-        Timeout (minutes): 
-        <input type="number" id="timeout-input" min="1" step="1"/>
-    </label>
-    <button id="save-button">Save</button>
-    <button id="clear-button">Clear</button>
+    <div class="dialog">
+        <h2>Tab reminder</h2>
+        <p class="subtitle">Leave a note for your future self.</p>
 
-    <div id="status"></div>
+        <label>
+            Why did you open this tab?
+            <textarea id="context-input" placeholder="Your reminder goes here!"
+                rows="3"></textarea>
+        </label>
+
+        <label>
+            Remind me after (minutes)
+            <input type="number" id="timeout-input" min="1" step="1" />
+        </label>
+
+        <div class="buttons">
+            <button id="save-button">Save reminder</button>
+            <button id="clear-button">Clear</button>
+        </div>
+
+        <div id="status"></div>
+    </div>
 
     <script src="popup.js"></script>
 </body>

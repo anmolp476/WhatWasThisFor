@@ -1,0 +1,114 @@
+:root {
+  --bg: #f3f4f6;
+  --dialog: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #6366f1;
+  --accent-soft: #eef2ff;
+  --border: #e5e7eb;
+}
+
+body {
+  width: 300px;
+  padding: 16px;
+  background: linear-gradient(180deg, #eef2ff, #f9fafb);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+}
+
+.dialog {
+  background: var(--dialog);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin: 4px 0 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+textarea,
+input[type="number"] {
+  margin-top: 6px;
+  margin-left: -5px;
+  width: 95%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  resize: none;
+  outline: none;
+  font-family: inherit;
+}
+
+textarea {
+  line-height: 1.4;
+}
+
+textarea:focus,
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+button {
+  flex: 1;
+  padding: 8px;
+  font-size: 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  transition: transform 80ms ease, box-shadow 80ms ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+#save-button {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.35);
+}
+
+#save-button:hover {
+  background: #4f46e5;
+}
+
+#clear-button {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+#clear-button:hover {
+  background: #f3f4f6;
+}
+
+#status {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}

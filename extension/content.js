@@ -12,7 +12,7 @@ chrome.storage.local.get(['contextTimeout'], (result) => {
 });
 
 const showContextReminder = (context) => {
-    console.log("context reminder time!");
+    console.log("context reminder time!", "Time: ", formatTimestampMMSS(Date.now(), 'America/New_York'));
 
     if (!context) return;
 
@@ -29,12 +29,17 @@ const showContextReminder = (context) => {
 
 // Update the last interaction time if user did something
 const updateInteraction = () => {
+    if (!contextCold) {
+        lastInteraction = Date.now();
+        return;
+    }
+
     const tabUrl = window.location.href;
 
     chrome.storage.local.get([tabUrl], (result) => {
         const context = result[tabUrl];
-        console.log("The context is: ", context);
-        if (context && contextCold) {
+        console.log("The context is: ", context, "Time: ", formatTimestampMMSS(Date.now(), 'America/New_York'));
+        if (context) {
             showContextReminder(context);
             chrome.storage.local.remove([tabUrl]);
             contextCold = false;
@@ -58,4 +63,11 @@ setInterval(() => {
     if (!contextCold && now - lastInteraction > contextTimeout) {
         contextCold = true;
     }
+
 }, CHECK_INTERVAL);
+
+// Format a timestamp into MM:SS for a given timeZone (default: EST/America/New_York)
+function formatTimestampMMSS(timestamp, timeZone = 'America/New_York') {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString('en-GB', { timeZone, hour: '2-digit', minute: '2-digit' });
+}

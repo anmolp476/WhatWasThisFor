@@ -16,8 +16,9 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "css": ["styles.css"]
+      "css": ["content.css"]
     }
   ],
-  "permissions": ["scripting", "storage", "tabs"]
+  "permissions": ["scripting", "storage", "tabs"],
+  "host_permissions": ["<all_urls>"]
 }
