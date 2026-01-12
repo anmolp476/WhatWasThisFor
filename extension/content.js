@@ -18,13 +18,23 @@ const showContextReminder = (context) => {
 
     const reminder = document.createElement("div");
     reminder.id = "context-reminder";
-    reminder.textContent = `You opened this tab because: "${context}"`;
+    reminder.innerHTML = `
+        <button class="context-close" aria-label="Dismiss reminder">✕</button>
+        <div class="context-label">You opened this tab because</div>
+        <div class="context-text">${context}</div>
+    `;
+
 
     chrome.storage.local.get(["reminderColor"], ({ reminderColor }) => {
         if (reminderColor) {
             reminder.style.background = reminderColor;
         }
     });
+
+    // Close button logic
+    reminder.querySelector(".context-close").onclick = () => {
+        reminder.remove();
+    };
 
 
     document.body.appendChild(reminder);
